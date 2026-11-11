@@ -1,0 +1,23 @@
+# Godot 4 引擎缓存与自动生成文件
+.godot/
+*.translation
+
+# 操作系统临时文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 编辑器与环境
+.idea/
+.vscode/
+*.swp
+*~
+*.bak
+
+# 日志与临时调试数据
+*.log
+tmp/

@@ -1,0 +1,37 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
+[application]
+
+config/name="山海问道录·天衍棋局"
+config/description="以山海经+修仙为背景的国风策略战棋游戏"
+config/version="0.1.0"
+run/main_scene="res://scenes/MainMenu.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[display]
+
+window/size/viewport_width=1440
+window/size/viewport_height=1050
+window/stretch/mode="canvas_items"
+
+[dotnet]
+
+project/assembly_name="山海问道录·天衍棋局"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

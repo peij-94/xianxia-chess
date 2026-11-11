@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[node name="PixelCelestialRay" type="CPUParticles2D"]
+emitting = false
+amount = 40
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.95
+emission_shape = 1
+emission_sphere_radius = 16.0
+direction = Vector2(0, 0)
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 220.0
+gravity = Vector2(0, 0)
+scale_amount_min = 4.0
+scale_amount_max = 7.0
+color = Color(0.98, 0.78, 0.22, 1)

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>山海问道录 · 天衍棋局 (16-Bit 国风仙侠肉鸽战棋)</title>
+  <link rel="stylesheet" href="css/style.css?v=2.1.0">
+</head>
+<body>
+
+  <!-- ======================================================================
+       1. 游戏主菜单界面 (Main Menu Screen)
+       ====================================================================== -->
+  <section id="screen-main-menu" class="screen-view active">
+    <div class="menu-backdrop">
+      <div class="menu-mist-layer"></div>
+      
+      <div class="menu-layout-wrapper">
+        <!-- 左侧：国风像素战棋主视觉海报插画卡 -->
+        <div class="menu-hero-card">
+          <div class="hero-poster-frame">
+            <img src="assets/images/cover.jpg" alt="山海问道录" class="hero-poster-img" />
+            <div class="hero-poster-vignette"></div>
+            <div class="hero-poster-caption">
+              <span class="hero-genre-tag">16-BIT 国风仙侠肉鸽战棋</span>
+              <h3 class="hero-motto">“五藏山经 · 问道伏魔”</h3>
+            </div>
+          </div>
+          <div class="hero-feature-tags">
+            <span class="feat-tag">✦ 策略走位·绝脉背刺</span>
+            <span class="feat-tag">✦ 五行生克·同调合击</span>
+            <span class="feat-tag">✦ 秘境攀登·遗宝构筑</span>
+          </div>
+        </div>
+
+        <!-- 右侧：战术指令中枢与肉鸽档案 -->
+        <div class="menu-command-center">
+          <div class="menu-brand-header">
+            <div class="menu-badge-row">
+              <span class="menu-subtitle-badge">✦ 大荒太古 · 天衍星宿 ✦</span>
+              <span class="menu-version-badge">ROGUELIKE SRPG v2.0</span>
+            </div>
+            <h1 class="menu-main-title">山海问道录</h1>
+            <div class="menu-secondary-title">天 衍 秘 境 · 肉 鸽 战 棋</div>
+            <p class="menu-quote">“张目为昼，阖目为夜；大荒苍茫，五藏隐秘，步步问道破万凶。”</p>
+          </div>
+
+          <!-- 活跃肉鸽存档快速返回简报 -->
+          <div id="menu-active-run-card" class="active-run-banner" style="display:none;">
+            <div class="run-banner-meta">
+              <span class="run-status-tag">✦ 秘境潜修未尽 ✦</span>
+              <span id="menu-run-info-text" class="run-floor-text">五藏山经 · 第 1 层</span>
+            </div>
+            <button id="btn-menu-continue" class="btn-pixel menu-btn continue-pulse-btn">
+              ✦ 继续大荒潜修 · 断点返道 ✦
+            </button>
+          </div>
+
+          <!-- 核心战术模式菜单 -->
+          <div class="menu-buttons-group">
+            <button id="btn-menu-roguelike" class="btn-pixel menu-btn highlight-btn">
+              <span class="btn-icon">🏔️</span>
+              <div class="btn-text-wrap">
+                <span class="btn-main-title">五藏山经 · 肉鸽秘境 (核心模式)</span>
+                <span class="btn-sub-desc">自选路线攀登5层神山，获取随机远古遗宝与奇遇</span>
+              </div>
+            </button>
+
+            <button id="btn-menu-practice" class="btn-pixel menu-btn">
+              <span class="btn-icon">🥋</span>
+              <div class="btn-text-wrap">
+                <span class="btn-main-title">天衍演武 · 演道沙盒 (练习模式)</span>
+                <span class="btn-sub-desc">自由配阵对决凶兽，开启无限真元、纯阳无敌与木桩靶标</span>
+              </div>
+            </button>
+
+            <button id="btn-menu-compendium" class="btn-pixel menu-btn">
+              <span class="btn-icon">📖</span>
+              <div class="btn-text-wrap">
+                <span class="btn-main-title">山海万灵 · 神典图鉴</span>
+                <span class="btn-sub-desc">查阅修仙同盟录、太古凶兽原典考据、远古遗宝志与五行道盘</span>
+              </div>
+            </button>
+
+            <div class="menu-sub-actions-row">
+              <button id="btn-menu-saves" class="btn-pixel menu-sub-btn">
+                💾 云笈天箓 · 存档管理
+              </button>
+              <button id="btn-menu-sound" class="btn-pixel menu-sub-btn">
+                🔊 灵音已启
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-footer-bar">
+            <span>《山海经》神话谱系 · 纯正复古 16-Bit 点阵手绘 · 战术战棋策略</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       2. 五藏山经 · 分岔大荒舆图界面 (Overworld Route Map Screen)
+       ====================================================================== -->
+  <section id="screen-map" class="screen-view">
+    <!-- 舆图顶部状态栏 -->
+    <header class="map-top-bar">
+      <div class="map-title-group">
+        <span id="map-realm-badge" class="chapter-badge">五藏山经 · 第 1 层</span>
+        <h2 id="map-realm-name" class="map-realm-title">南山之境 · 祝融遗火</h2>
+      </div>
+
+      <!-- 我方修仙队伍实时精气神简报 -->
+      <div id="map-party-bar" class="map-party-status">
+        <!-- 动态生成 3 位队员头像与血条 -->
+      </div>
+
+      <div class="map-stones-box">
+        💎 灵石: <span id="map-spirit-stones-count">200</span>
+      </div>
+
+      <div class="map-actions-group">
+        <button id="btn-map-compendium" class="btn-pixel">📖 万灵图鉴</button>
+        <button id="btn-map-save" class="btn-pixel">💾 封存记录</button>
+        <button id="btn-map-return-menu" class="btn-pixel">🏠 返回主殿</button>
+      </div>
+    </header>
+
+    <!-- 舆图路线主体交互卷轴 -->
+    <div class="map-scroll-stage">
+      <div class="map-scroll-paper">
+        <div class="map-scroll-header">
+          <span>【大荒舆图】指点发光节点抉择道途，步步为营，直捣绝巅境主神殿：</span>
+        </div>
+
+        <!-- 节点连线与标记绘图区 -->
+        <div id="map-nodes-container" class="map-nodes-canvas-wrapper">
+          <svg id="map-routes-svg" class="map-routes-svg"></svg>
+          <div id="map-nodes-tier-grid" class="map-tiers-flex">
+            <!-- 动态生成 0~5 阶地图节点卡片 -->
+          </div>
+        </div>
+
+        <!-- 舆图图例说明 -->
+        <div class="map-legend-bar">
+          <span class="legend-item"><span class="legend-icon">⚔️</span> 妖兽侵扰</span>
+          <span class="legend-item"><span class="legend-icon">👹</span> 荒古精英 (必得古宝)</span>
+          <span class="legend-item"><span class="legend-icon">❓</span> 山海奇遇</span>
+          <span class="legend-item"><span class="legend-icon">🏕️</span> 灵泉道场 (调息修整)</span>
+          <span class="legend-item"><span class="legend-icon">💎</span> 多宝商行 (灵石交易)</span>
+          <span class="legend-item"><span class="legend-icon">👑</span> 境主妖祖 (决战首领)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       3. 主战棋棋盘对弈视窗 (Tactical Battle Stage)
+       ====================================================================== -->
+  <section id="screen-battle" class="screen-view">
+    <!-- 顶部状态栏与行动轮次 -->
+    <header class="top-header">
+      <div class="title-group">
+        <div class="game-title">山海问道录 · 天衍棋局</div>
+        <div id="chapter-title" class="chapter-badge">第一回：青丘之野 · 凶潮初现</div>
+      </div>
+
+      <div class="turn-status-bar">
+        <div id="round-counter" class="round-tag">第 1 候</div>
+        <div id="turn-indicator" class="turn-tag player-turn">【太虚修士回合】</div>
+        <div class="stones-box">💎 灵石: <span id="spirit-stones-count">200</span></div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btn-end-turn" class="btn-pixel primary">结束回合</button>
+        <button id="btn-undo" class="btn-pixel" disabled>↶ 悔棋</button>
+        <button id="btn-breakthrough" class="btn-pixel breakthrough-btn">★ 境界突破</button>
+        <button id="btn-view-map" class="btn-pixel highlight-btn" style="display:none;">🗺️ 查看舆图</button>
+        <button id="btn-return-home" class="btn-pixel">🏠 返回主殿</button>
+        <button id="btn-sound-toggle" class="btn-pixel">🔊 灵音已启</button>
+      </div>
+    </header>
+
+    <!-- 五行相克天干道盘提示栏 -->
+    <div class="element-wheel-bar">
+      <span>【大荒天衍·五行生克】克制伤害 +35%：</span>
+      <div class="element-chain">
+        <span class="elem-badge elem-metal">金</span> →克→ 
+        <span class="elem-badge elem-wood">木</span> →克→ 
+        <span class="elem-badge elem-earth">土</span> →克→ 
+        <span class="elem-badge elem-water">水</span> →克→ 
+        <span class="elem-badge elem-fire">火</span> →克→ 
+        <span class="elem-badge elem-metal">金</span>
+      </div>
+      <span>｜ 绝脉背刺 140% 必暴击 ｜ 撞墙崩裂壁击 ｜ 修士神兽同调合击 +25%</span>
+    </div>
+
+    <!-- 主交互对弈视窗 -->
+    <!-- 主交互对弈视窗 -->
+    <main class="main-stage">
+      <!-- 左侧：战棋棋盘 Canvas -->
+      <section class="board-container">
+        <div class="canvas-wrapper">
+          <canvas id="battle-canvas" width="900" height="900"></canvas>
+          <!-- 角色选中后悬浮招式选择弹窗 (Floating Skill HUD) -->
+          <div id="unit-floating-skills" class="unit-floating-skills-panel" style="display:none;"></div>
+        </div>
+        <div class="board-tips">
+          <p>✦ 点击我方修士弹出<strong>【移动 / 攻击 / 防御】</strong>战术指令；点击【移动】展开步法移行，点击【攻击】弹出本命绝学秘术！</p>
+          <p>✦ 攻击模式下悬停招式图标，右侧详情栏实时点亮神通说明；<strong>若未战斗仅移动，随时点击鼠标右键或【撤步】撤销移动！</strong></p>
+          <p>✦ 地脉：💧水华灵泉回合初回血回气 ｜ 🔥祝融火脉火法+35% ｜ 🌿建木古林20%闪避 ｜ ⛰️玄黄巨岩阻挡碰撞</p>
+        </div>
+      </section>
+
+      <!-- 右侧：角色玉简详情与操作面板 -->
+      <aside class="control-panel">
+        <!-- 角色详细玉简 (像素立绘与属性) -->
+        <div id="unit-card" class="jade-scroll-panel">
+          <div class="jade-header">
+            <div class="unit-portrait-container">
+              <div id="unit-avatar" class="unit-avatar-box">☯</div>
+              <div id="unit-action-badge" class="unit-action-tag">【🧘 待机吐纳】</div>
+            </div>
+            <div class="unit-meta">
+              <div class="unit-name-row">
+                <span id="unit-name" class="unit-name">未选定单位</span>
+                <span id="unit-realm" class="unit-realm">---</span>
+              </div>
+              <div id="unit-title" class="unit-title-row">请凝神观棋</div>
+              <div id="unit-element" class="unit-elem-text">---</div>
+              <div id="unit-stance-tip" class="unit-stance-tip">✦ 气定神闲 · 周天运化</div>
+            </div>
+          </div>
+
+          <div class="stat-bars-group">
+            <div class="bar-row">
+              <span class="bar-label">气血:</span>
+              <div class="bar-track">
+                <div id="unit-hp-bar" class="bar-fill hp"></div>
+              </div>
+              <span id="unit-hp" class="bar-value">0 / 0</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-label">真元:</span>
+              <div class="bar-track">
+                <div id="unit-qi-bar" class="bar-fill qi"></div>
+              </div>
+              <span id="unit-qi" class="bar-value">0 / 0</span>
+            </div>
+          </div>
+
+          <div class="stat-chips-grid">
+            <div class="chip-item">
+              <div class="chip-title">攻伐</div>
+              <div id="unit-atk" class="chip-val">-</div>
+            </div>
+            <div class="chip-item">
+              <div class="chip-title">守御</div>
+              <div id="unit-def" class="chip-val">-</div>
+            </div>
+            <div class="chip-item">
+              <div class="chip-title">步法</div>
+              <div id="unit-move" class="chip-val">-</div>
+            </div>
+          </div>
+
+          <div id="unit-quote" class="unit-quote-text">
+            轻点棋盘上的修仙者或凶兽，参看其本命真元与神通。
+          </div>
+        </div>
+
+        <!-- 远古遗宝神龛 (肉鸽词条) -->
+        <div id="relics-box" class="relics-shrine-box">
+          <div class="section-title">
+            <span>✦ 远古遗宝神龛</span>
+            <span id="relics-count-tag" style="font-size:11px;color:var(--text-dim)">共 0 件</span>
+          </div>
+          <div id="relics-list" class="relics-grid">
+            <span class="empty-relic-tip">暂无遗宝</span>
+          </div>
+        </div>
+
+        <!-- 战术行动指令决策中枢与招式神通真解秘卷区 -->
+        <div class="action-box skill-scripture-box">
+          <div class="section-title">
+            <span id="action-hub-title">✦ 战术行动指令决策</span>
+            <span id="skill-action-state-tag" class="skill-state-badge">神识感应</span>
+          </div>
+
+          <!-- 右侧操作栏醒目战术指令按钮中枢 (移动 / 攻击 / 防御 强力双向联动) -->
+          <div id="action-hub-container" class="action-hub-container">
+            <!-- 动态填充一级战术指令或二级绝学神通 -->
+          </div>
+
+          <div id="skill-inspection-card" class="skill-inspection-card">
+            <!-- 悬浮图标或选中招式时动态展示秘卷详情 -->
+          </div>
+          <!-- 兼容旧容器，保持自动化逻辑与事件兼容 -->
+          <div id="skills-container" class="skills-wrapper" style="display:none;"></div>
+        </div>
+
+        <!-- 大荒天衍战报滚动卷轴 -->
+        <div class="log-box">
+          <div class="section-title">大荒天衍实况录</div>
+          <div id="combat-log" class="log-scroll">
+            <!-- 动态日志 -->
+          </div>
+        </div>
+      </aside>
+    </main>
+  </section>
+
+  <!-- ======================================================================
+       4. 演武道场 · 练习沙盒设置弹窗 Modal (Practice Mode Modal)
+       ====================================================================== -->
+  <div id="modal-practice" class="modal-overlay">
+    <div class="modal-content practice-modal-content">
+      <div class="modal-title victory">演武演道 · 自由战阵推演</div>
+      <div class="modal-desc">可任意调遣修仙同盟、设定假想凶兽、选择地脉与开启沙盒研道法则：</div>
+
+      <div class="practice-config-grid">
+        <!-- 栏目1：修仙同盟 -->
+        <div class="config-col">
+          <div class="col-title">✦ 参战修仙者 (可多选)</div>
+          <div id="practice-party-select" class="checkbox-group">
+            <label class="pixel-checkbox"><input type="checkbox" value="lingxu" checked> ⚔️ 凌虚子 (太虚剑仙·金)</label>
+            <label class="pixel-checkbox"><input type="checkbox" value="baiqian" checked> 🦊 白浅 (青丘天狐·木)</label>
+            <label class="pixel-checkbox"><input type="checkbox" value="bifang" checked> 🪶 毕方 (南山神禽·火)</label>
+          </div>
+          <div class="col-title" style="margin-top:12px;">✦ 修士境界预设</div>
+          <select id="practice-realm-select" class="pixel-select">
+            <option value="0">金丹期 (基础)</option>
+            <option value="1">太虚元婴真君 (解锁突破奥义)</option>
+            <option value="2">化神至尊真仙 (大幅强化)</option>
+          </select>
+        </div>
+
+        <!-- 栏目2：对阵凶煞 -->
+        <div class="config-col">
+          <div class="col-title">✦ 假想敌兽配置 (可多选)</div>
+          <div id="practice-enemy-select" class="checkbox-group">
+            <label class="pixel-checkbox"><input type="checkbox" value="huodou" checked> 🐺 祸斗 (食火狂妖·火)</label>
+            <label class="pixel-checkbox"><input type="checkbox" value="gudiao" checked> 🦅 蛊雕 (鹿吴巨禽·金)</label>
+            <label class="pixel-checkbox"><input type="checkbox" value="dangkang"> 🐗 梼杌真身 (荒古四凶·土)</label>
+            <label class="pixel-checkbox"><input type="checkbox" value="xiangliu"> 🐍 相柳 (九首毒神·水)</label>
+            <label class="pixel-checkbox"><input type="checkbox" value="qiongqi"> 🐅 穷奇 (嗜血翼魔·金)</label>
+            <label class="pixel-checkbox"><input type="checkbox" value="zhujiuyin"> 🐉 烛九阴 (太古古神·火)</label>
+          </div>
+        </div>
+
+        <!-- 栏目3：环境与沙盒 -->
+        <div class="config-col">
+          <div class="col-title">✦ 棋盘地貌与天象</div>
+          <select id="practice-terrain-select" class="pixel-select">
+            <option value="BALANCED">均衡灵脉 (综合地貌)</option>
+            <option value="FIRE">祝融火脉密布 (火伤+35%)</option>
+            <option value="WATER">天池灵泉汇聚 (回血回气)</option>
+            <option value="WOOD">建木古林成阵 (20%闪避)</option>
+            <option value="STONE">玄黄巨岩迷阵 (撞墙壁击)</option>
+          </select>
+
+          <div class="col-title" style="margin-top:12px;">✦ 沙盒研道法则</div>
+          <div class="checkbox-group">
+            <label class="pixel-checkbox"><input id="sandbox-infinite-qi" type="checkbox"> 🌀 无限真元 (随意施放奥义)</label>
+            <label class="pixel-checkbox"><input id="sandbox-invincible" type="checkbox"> 🛡️ 纯阳不灭 (修士不受伤害)</label>
+            <label class="pixel-checkbox"><input id="sandbox-dummy" type="checkbox"> 🪵 木桩靶标 (凶兽不攻击)</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-actions-row">
+        <button id="btn-practice-launch" class="btn-pixel primary">★ 踏入演武道场 · 开始推演</button>
+        <button id="btn-practice-close" class="btn-pixel">关闭返回</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       5. 山海万灵图鉴弹窗 Modal (Compendium Modal)
+       ====================================================================== -->
+  <div id="modal-compendium" class="modal-overlay">
+    <div class="modal-content compendium-modal-content">
+      <div class="compendium-top-bar">
+        <div class="modal-title victory">山海万灵录 · 大荒神典</div>
+        <div class="compendium-nav-tabs">
+          <button class="comp-tab-btn active" data-tab="CULTIVATORS">【修仙同盟录】</button>
+          <button class="comp-tab-btn" data-tab="BEASTS">【荒古凶兽志】</button>
+          <button class="comp-tab-btn" data-tab="RELICS">【大荒遗宝谱】</button>
+          <button class="comp-tab-btn" data-tab="WHEEL">【天道五行盘】</button>
+        </div>
+      </div>
+
+      <div class="compendium-main-grid">
+        <!-- 左侧列表 -->
+        <div id="comp-item-list" class="comp-item-sidebar">
+          <!-- 动态注入列表卡片 -->
+        </div>
+
+        <!-- 右侧详细玉简详情 -->
+        <div id="comp-detail-scroll" class="comp-detail-scroll">
+          <!-- 动态渲染详细介绍、立绘、数值、古籍记载与战术要诀 -->
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:14px;">
+        <button id="btn-compendium-close" class="btn-pixel">合上图鉴</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       6. 云笈天机 · 存档管理弹窗 Modal (Save Management Modal)
+       ====================================================================== -->
+  <div id="modal-saves" class="modal-overlay">
+    <div class="modal-content saves-modal-content">
+      <div class="modal-title victory">云笈天机 · 归档与道心印记</div>
+      <div class="modal-desc">可将当前修仙肉鸽进度封存于槽位中，或通过天衍灵符导出/导入归档：</div>
+
+      <div id="save-slots-container" class="save-slots-grid">
+        <!-- 动态生成 3 个存档槽位卡片 -->
+      </div>
+
+      <div class="save-tools-row">
+        <button id="btn-save-export" class="btn-pixel">📜 导出存档符 (JSON)</button>
+        <button id="btn-save-import" class="btn-pixel">📥 导入存档符</button>
+        <button id="btn-save-reset" class="btn-pixel danger-btn">⚠️ 重置清空所有记录</button>
+        <button id="btn-save-close" class="btn-pixel">关闭玉简</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       7. 灵泉道场修整弹窗 Modal (Rest Site Modal)
+       ====================================================================== -->
+  <div id="modal-rest" class="modal-overlay">
+    <div class="modal-content rest-modal-content">
+      <div class="modal-title victory">🏕️ 灵泉道场 · 吐纳调养</div>
+      <div class="modal-desc">行至云深灵雾处，灵泉汩汩而流。请选择一项道法调养生息：</div>
+
+      <div class="rest-options-grid">
+        <div id="rest-opt-heal" class="rest-choice-card">
+          <div class="rest-choice-icon">💧</div>
+          <div class="rest-choice-title">灵泉回春</div>
+          <div class="rest-choice-desc">阖目吐纳天池灵泉，修仙队伍全员恢复 45% 最大气血。</div>
+          <button class="btn-pixel primary">汲取泉华</button>
+        </div>
+
+        <div id="rest-opt-upgrade" class="rest-choice-card">
+          <div class="rest-choice-icon">⚔️</div>
+          <div class="rest-choice-title">坐忘悟道</div>
+          <div class="rest-choice-desc">凝神参悟山海古经，修仙队伍全员攻击力永久提升 5 点！</div>
+          <button class="btn-pixel primary">参悟道心</button>
+        </div>
+
+        <div id="rest-opt-qi" class="rest-choice-card">
+          <div class="rest-choice-icon">☯️</div>
+          <div class="rest-choice-title">法宝淬炼</div>
+          <div class="rest-choice-desc">淬砺本命法宝，往后每场战斗伊始额外充盈 +1 点初始真元！</div>
+          <button class="btn-pixel primary">淬炼神华</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       8. 多宝商行交易弹窗 Modal (Duobao Shop Modal)
+       ====================================================================== -->
+  <div id="modal-shop" class="modal-overlay">
+    <div class="modal-content shop-modal-content">
+      <div class="shop-top-bar">
+        <div class="modal-title victory">💎 多宝商行 · 仙珍阁</div>
+        <div class="shop-stones-tag">持有灵石: <span id="shop-stones-display">0</span> 💎</div>
+      </div>
+      <div class="modal-desc">云游古修偶设法肆，偶有荒古遗宝与九转灵丹待沽：</div>
+
+      <div id="shop-items-grid" class="shop-items-grid">
+        <!-- 动态生成可购商品卡片 -->
+      </div>
+
+      <div style="text-align:center;margin-top:16px;">
+        <button id="btn-shop-leave" class="btn-pixel primary">结缘离开商行</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       9. 胜负终局弹窗 Modal (Battle End Modal)
+       ====================================================================== -->
+  <div id="game-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div id="modal-title" class="modal-title victory">道破混沌 · 大荒底定</div>
+      <div id="modal-rating" class="modal-rating-text">【战役评价：甲上 · 神算入微】</div>
+      <div id="modal-desc" class="modal-desc">
+        众修仙道友与契约神兽同心协力，肃清大荒受蚀凶兽！天衍星盘重焕清明。
+      </div>
+      <div class="modal-actions">
+        <button id="modal-next-btn" class="btn-pixel primary">启程 · 继续探道</button>
+        <button id="modal-restart-btn" class="btn-pixel">再探此回</button>
+        <button id="modal-return-menu-btn" class="btn-pixel">返回宗门主殿</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       10. 战役章节选择弹窗 Modal (Campaign Modal)
+       ====================================================================== -->
+  <div id="chapter-modal" class="modal-overlay">
+    <div class="modal-content chapter-modal-content">
+      <div class="modal-title victory">大荒天衍 · 经典战役卷轴</div>
+      <div class="modal-desc">选择要重温或推演的山海经主线关卡：</div>
+      <div id="chapter-list" class="chapter-list">
+        <!-- 动态生成章节卡片 -->
+      </div>
+      <div style="text-align:center;margin-top:16px;">
+        <button id="chapter-modal-close" class="btn-pixel">关闭卷轴</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       11. Roguelike 遗宝三选一弹窗 Modal (Relic Draft Modal)
+       ====================================================================== -->
+  <div id="relic-modal" class="modal-overlay">
+    <div class="modal-content chapter-modal-content">
+      <div class="modal-title victory">天地造化 · 参悟遗宝</div>
+      <div class="modal-desc">击溃秘境强敌，天道垂青！请选择一件大荒古修遗宝铭刻道心：</div>
+      <div id="relic-select-list" class="relic-select-list">
+        <!-- 动态生成 3 件遗宝卡片 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       12. Roguelike 奇遇事件弹窗 Modal (Event Modal)
+       ====================================================================== -->
+  <div id="event-modal" class="modal-overlay">
+    <div class="modal-content chapter-modal-content">
+      <div id="event-title" class="modal-title victory">大荒奇遇 · 异象忽现</div>
+      <div id="event-desc" class="modal-desc" style="font-size:14px;color:#e2e8f0;line-height:1.7;">
+        <!-- 动态奇遇描述 -->
+      </div>
+      <div id="event-options" class="event-options-group">
+        <!-- 动态奇遇选项 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       游戏脚本载入 (按依赖拓扑顺序，附带时间戳防浏览器强缓存)
+       ====================================================================== -->
+  <script src="js/constants.js?t=1791583000"></script>
+  <script src="js/audio.js?t=1791583000"></script>
+  <script src="js/pixel_tiles.js?t=1791583000"></script>
+  <script src="js/pixel_sprites.js?t=1791583000"></script>
+  <script src="js/data.js?t=1791583000"></script>
+  <script src="js/save.js?t=1791583000"></script>
+  <script src="js/map.js?t=1791583000"></script>
+  <script src="js/compendium.js?t=1791583000"></script>
+  <script src="js/grid.js?t=1791583000"></script>
+  <script src="js/entity.js?t=1791583000"></script>
+  <script src="js/combat.js?t=1791583000"></script>
+  <script src="js/ai.js?t=1791583000"></script>
+  <script src="js/vfx.js?t=1791583000"></script>
+  <script src="js/renderer.js?t=1791583000"></script>
+  <script src="js/practice.js?t=1791583000"></script>
+  <script src="js/roguelike.js?t=1791583000"></script>
+  <script src="js/ui.js?t=1791583000"></script>
+  <script src="js/game.js?t=1791583000"></script>
+</body>
+</html>

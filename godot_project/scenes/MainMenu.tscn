@@ -1,0 +1,193 @@
+[gd_scene format=3 uid="uid://dmqm7u2k51vab"]
+
+[ext_resource type="Script" path="res://scripts/ui/MainMenu.gd" id="1_main_menu"]
+[ext_resource type="Texture2D" path="res://assets/images/cover.jpg" id="2_cover"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main_menu")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0431373, 0.0627451, 0.0784314, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 40
+
+[node name="HBox" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 48
+
+[node name="LeftCol" type="VBoxContainer" parent="Margin/HBox"]
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PosterFrame" type="PanelContainer" parent="Margin/HBox/LeftCol"]
+custom_minimum_size = Vector2(440, 520)
+layout_mode = 2
+
+[node name="PosterImg" type="TextureRect" parent="Margin/HBox/LeftCol/PosterFrame"]
+layout_mode = 2
+texture = ExtResource("2_cover")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="PosterCaption" type="Label" parent="Margin/HBox/LeftCol"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92549, 0.788235, 0.505882, 1)
+theme_override_font_sizes/font_size = 15
+text = "16-BIT 国风仙侠肉鸽战棋 · 五藏山经"
+horizontal_alignment = 1
+
+[node name="TagsLabel" type="Label" parent="Margin/HBox/LeftCol"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.580392, 0.658824, 0.733333, 1)
+theme_override_font_sizes/font_size = 13
+text = "✦ 策略战棋 ✦ 绝脉背刺 ✦ 五行生克 ✦ 遗宝构筑"
+horizontal_alignment = 1
+
+[node name="RightCol" type="VBoxContainer" parent="Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+
+[node name="TitleGroup" type="VBoxContainer" parent="Margin/HBox/RightCol"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SubtitleBadge" type="Label" parent="Margin/HBox/RightCol/TitleGroup"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.639216, 0.901961, 0.207843, 1)
+theme_override_font_sizes/font_size = 13
+text = "✦ 大荒太古 · 16-BIT RETRO ROGUELIKE TACTICS ✦"
+
+[node name="MainTitle" type="Label" parent="Margin/HBox/RightCol/TitleGroup"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92549, 0.788235, 0.505882, 1)
+theme_override_font_sizes/font_size = 44
+text = "山海问道录"
+
+[node name="SecondaryTitle" type="Label" parent="Margin/HBox/RightCol/TitleGroup"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.576471, 0.772549, 0.992157, 1)
+theme_override_font_sizes/font_size = 20
+text = "天 衍 秘 境 · 肉 鸽 战 棋"
+
+[node name="QuoteLabel" type="Label" parent="Margin/HBox/RightCol/TitleGroup"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.545098, 0.607843, 0.705882, 1)
+theme_override_font_sizes/font_size = 13
+text = "“张目为昼，阖目为夜；大荒苍茫，五藏隐秘，步步问道破万凶。”"
+
+[node name="ActiveRunCard" type="PanelContainer" parent="Margin/HBox/RightCol"]
+visible = false
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Margin/HBox/RightCol/ActiveRunCard"]
+layout_mode = 2
+
+[node name="RunInfoLabel" type="Label" parent="Margin/HBox/RightCol/ActiveRunCard/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.992157, 0.901961, 0.541176, 1)
+theme_override_font_sizes/font_size = 13
+text = "✦ 当前秘境潜修中：五藏山经 · 第 1 层 ｜ 灵石: 200 ✦"
+
+[node name="VBoxButtons" type="VBoxContainer" parent="Margin/HBox/RightCol"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ContinueBtn" type="Button" parent="Margin/HBox/RightCol/VBoxButtons"]
+visible = false
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.984314, 0.921569, 1)
+theme_override_font_sizes/font_size = 15
+text = "✦ 继续大荒潜修 · 断点返道 ✦"
+
+[node name="RoguelikeBtn" type="Button" parent="Margin/HBox/RightCol/VBoxButtons"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.878431, 0.94902, 0.996078, 1)
+theme_override_font_sizes/font_size = 16
+text = "🏔️ 五藏山经 · 肉鸽秘境 (核心模式)"
+
+[node name="PracticeBtn" type="Button" parent="Margin/HBox/RightCol/VBoxButtons"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "🥋 天衍演武 · 演道沙盒 (练习模式)"
+
+[node name="CompendiumBtn" type="Button" parent="Margin/HBox/RightCol/VBoxButtons"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "📖 山海万灵 · 神典图鉴"
+
+[node name="SavesBtn" type="Button" parent="Margin/HBox/RightCol/VBoxButtons"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "💾 云笈天箓 · 存档管理"
+
+[node name="QuitBtn" type="Button" parent="Margin/HBox/RightCol/VBoxButtons"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "🚪 离开大荒"
+
+[node name="FooterLabel" type="Label" parent="Margin/HBox/RightCol"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_colors/font_color = Color(0.333333, 0.411765, 0.490196, 1)
+theme_override_font_sizes/font_size = 11
+text = "山海经神话谱系 × 16-Bit 复古像素 × 战棋策略 SRPG ｜ Godot 4 官方版"
+
+[node name="CompendiumDialog" type="AcceptDialog" parent="."]
+title = "山海万灵录 · 神典图鉴"
+size = Vector2i(780, 520)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CompendiumDialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 772.0
+offset_bottom = 471.0
+
+[node name="CompendiumText" type="RichTextLabel" parent="CompendiumDialog/ScrollContainer"]
+custom_minimum_size = Vector2(740, 450)
+layout_mode = 2
+bbcode_enabled = true
+
+[node name="SavesDialog" type="AcceptDialog" parent="."]
+title = "云笈天箓 · 秘境封存"
+size = Vector2i(680, 420)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SavesDialog"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 672.0
+offset_bottom = 371.0
+
+[node name="SavesText" type="RichTextLabel" parent="SavesDialog/ScrollContainer"]
+custom_minimum_size = Vector2(640, 350)
+layout_mode = 2
+bbcode_enabled = true
